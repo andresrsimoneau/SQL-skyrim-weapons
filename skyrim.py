@@ -14,5 +14,16 @@ WHERE type = 'Dagger'
 """)
 dagger_damage = weapons_sql.fetchall()
 
-for damage in dagger_damage:
-    print(f"{damage[0]} AVERAGE DAGGER DAMAGE")
+weapons_sql.execute("""
+SELECT AVG(damage)
+FROM weaponsdata
+WHERE type = 'Battleaxe'
+""")
+battleaxe_damage = weapons_sql.fetchall()
+
+def average_function(query, label): #function to simplify SQL outputs 
+	for damage in query:
+	    print(f"AVG {damage[0]} DAMAGE | {label}")
+
+average_function(dagger_damage, 'Dagger')
+average_function(battleaxe_damage, 'Battleaxe')
