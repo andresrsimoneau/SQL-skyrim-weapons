@@ -7,14 +7,12 @@ weapons.to_sql("weaponsdata" , weapons_data, if_exists="replace", index=False) #
                   #table     #SQlite connection
 weapons_sql = weapons_data.cursor() # allows us to execute SQL commands on the database
 
-BEST_DAMAGE_AND_CLASS = """
-SELECT damage, type
+weapons_sql.execute("""
+SELECT AVG(damage)
 FROM weaponsdata
-WHERE damage > 20
-ORDER BY damage DESC
-"""
+WHERE type = 'Dagger'
+""")
+dagger_damage = weapons_sql.fetchall()
 
-weapons_sql.execute(BEST_DAMAGE_AND_CLASS)
-joe_biden = weapons_sql.fetchall()
-for damage, type in joe_biden:
-        print(f"{damage} damage | {type} CLASS")
+for damage in dagger_damage:
+    print(f"{damage[0]} AVERAGE DAGGER DAMAGE")
